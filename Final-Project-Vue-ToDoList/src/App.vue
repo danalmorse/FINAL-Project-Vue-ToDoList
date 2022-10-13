@@ -7,7 +7,7 @@
 <script setup>
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useRouter } from 'vue-router'
+/*import { useRouter } from 'vue-router'*/
 import { useUserStore } from './stores/user'
 
 /*const router = useRouter()*/
