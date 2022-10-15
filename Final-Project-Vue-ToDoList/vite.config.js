@@ -18,7 +18,7 @@ export default defineConfig({
     ],
     
   /*como esto se instalo */
-  /*plugins: [vue()],*/
+  /*plugins: [vue()],*/ /*Aqui en plugins he copiado lo de arriba de quasar y lo he bajado aquí en caso de utilizar bootstrap tengo que eliminar quasar */
   plugins: [
     vue({
       template: { transformAssetUrls }
