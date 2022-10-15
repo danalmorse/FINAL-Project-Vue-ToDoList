@@ -1,16 +1,25 @@
 <template>
-  <section>
-    <router-view class="app-main" /> <!-- your routes will load inside of these tags -->    
-  </section>
+  <div>
+    <HeaderPage />
+    <HomePage/>
+    <FooterPage />
+
+  </div>
 </template>
 
 <script setup>
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
+
 /*import { useRouter } from 'vue-router'*/
 import { useUserStore } from './stores/user'
+import HeaderPage from './components/HeaderPage.vue'
+/*import HelpPage from './components/HelpPage.vue'*/
+import FooterPage from './components/FooterPage.vue'
+import HomePage from './components/HomePage.vue'
+/*import Date from './components/Date.vue'*/
 
-/*const router = useRouter()*/
+/*const router = useRouter()*/ /* */
 const userStore = useUserStore()
 const { user } = storeToRefs(userStore)
 

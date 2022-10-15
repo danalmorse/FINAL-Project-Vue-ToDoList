@@ -1,19 +1,15 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import piniaPersist from 'pinia-plugin-persist';
-import { Quasar } from 'quasar'; /*info de Quasar */
+
 
 import App from "./App.vue";
 import router from "./router";
+import "bootstrap" 
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import "./assets/main.css";
 
-/*la info de quasar que sale en la pagina pregunta si esta bien */
-// Import icon libraries
-import '@quasar/extras/material-icons/material-icons.css';
-
-// Import Quasar css
-import 'quasar/dist/quasar.css';
 
 // Assumes your root component is App.vue
 // and placed in same folder as main.js
@@ -29,10 +25,6 @@ import 'quasar/dist/quasar.css';
 const app = createApp(App);
 
 const pinia = createPinia()
-
-app.use(Quasar, {
-    plugins: {}, // import Quasar plugins and add here
-  });
 
 pinia.use(piniaPersist)
 
