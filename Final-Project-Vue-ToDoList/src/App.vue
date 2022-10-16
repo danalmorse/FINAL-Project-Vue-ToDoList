@@ -2,6 +2,8 @@
   <div>
     <HeaderPage />
     <HomePage/>
+    <AboutUs/>
+    <Collaborators/>
     <FooterPage />
 
   </div>
@@ -14,9 +16,11 @@ import { storeToRefs } from 'pinia'
 /*import { useRouter } from 'vue-router'*/
 import { useUserStore } from './stores/user'
 import HeaderPage from './components/HeaderPage.vue'
-/*import HelpPage from './components/HelpPage.vue'*/
 import FooterPage from './components/FooterPage.vue'
 import HomePage from './components/HomePage.vue'
+import AboutUs from './components/AboutUs.vue'
+import Collaborators from './components/Collaborators.vue'
+/*import AboutUs from './components/AboutUs.vue'*/
 /*import Date from './components/Date.vue'*/
 
 /*const router = useRouter()*/ /* */
