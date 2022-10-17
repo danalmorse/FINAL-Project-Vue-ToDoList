@@ -1,4 +1,5 @@
-<script>
+<script setup>
+import { RouterLink } from 'vue-router'
 
 </script>
 
@@ -8,7 +9,7 @@
             <h1 class="display-4 fw-normal">Day to Day Task App</h1>
             <p class="lead fw-normal">There’s a Better Way to Plan Your Day (And It Can Triple Your Productivity).</p>
             <p class="lead fw-normal">to-do list apps are the most popular. This is likely because they offer a good balance of simplicity and features. The best to-do list apps will allow you to track your tasks, set deadlines, and even share your to-do list with others.</p>
-            <a class="btn btn-outline-secondary" href="#">Sign Up!!!</a>
+            <RouterLink :to="{ name: 'SignUp' }"><a class="btn btn-secondary" href="#">Sign Up!!!</a></RouterLink>
         </div>
         <div class="cta-footer_logos">
             <h6 class="text">Tech and media companies are talking about Day To Day Task App</h6>

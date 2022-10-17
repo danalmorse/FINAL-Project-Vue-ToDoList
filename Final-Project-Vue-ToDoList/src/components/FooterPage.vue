@@ -60,9 +60,9 @@
         </ul>
 
         <ul class="nav col-md-4 justify-content-end">
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+            <li class="nav-item"><RouterLink :to="{ name: 'home' }"><a href="#" class="nav-link px-2 text-muted">Home</a></RouterLink></li>
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About Us</a></li>
+            <li class="nav-item"><RouterLink :to="{ name: 'AboutUs' }"><a href="#" class="nav-link px-2 text-muted">About Us</a></RouterLink></li>
         </ul>
     </footer>
 <!--</div>-->

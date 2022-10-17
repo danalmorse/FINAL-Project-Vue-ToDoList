@@ -7,7 +7,27 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: () => import('../components/HeaderPage.vue'),
+      component: () => import('../components/HomePage.vue'),
+    },
+    {
+      path: "/About-Us",
+      name: "AboutUs",
+      component: () => import('../components/AboutUs.vue'),
+    },
+    {
+      path: "/Collaborators",
+      name: "Collaborators",
+      component: () => import('../components/Collaborators.vue'),
+    },
+    {
+      path: "/Sign-In",
+      name: "SignIn",
+      component: () => import('../components/SignInPage.vue'),
+    },
+    {
+      path: "/Sign-Up",
+      name: "SignUp",
+      component: () => import('../components/SignUpPage.vue'),
     },
     
   ],

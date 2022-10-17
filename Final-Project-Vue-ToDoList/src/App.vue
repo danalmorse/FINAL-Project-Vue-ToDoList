@@ -1,9 +1,12 @@
 <template>
   <div>
     <HeaderPage />
-    <HomePage/>
+    <RouterView/>
+    <!--<HomePage/>
+    <SignInPage/>
+    <SignUpPage/>
     <AboutUs/>
-    <Collaborators/>
+    <Collaborators/>-->
     <FooterPage />
 
   </div>
@@ -13,14 +16,16 @@
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 
-/*import { useRouter } from 'vue-router'*/
+import { RouterView, /*useRouter*/ } from 'vue-router'
 import { useUserStore } from './stores/user'
 import HeaderPage from './components/HeaderPage.vue'
 import FooterPage from './components/FooterPage.vue'
-import HomePage from './components/HomePage.vue'
-import AboutUs from './components/AboutUs.vue'
-import Collaborators from './components/Collaborators.vue'
+/*import HomePage from './components/HomePage.vue'*/
 /*import AboutUs from './components/AboutUs.vue'*/
+/*import Collaborators from './components/Collaborators.vue'*/
+/*import SignInPage from './components/SignInPage.vue'*/
+/*import SignUpPage from './components/SignUpPage.vue'*/
+
 /*import Date from './components/Date.vue'*/
 
 /*const router = useRouter()*/ /* */
