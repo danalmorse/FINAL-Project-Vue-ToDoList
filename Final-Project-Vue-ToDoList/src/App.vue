@@ -2,6 +2,7 @@
   <div>
     <HeaderPage />
     <RouterView/>
+    <ToDoList/>
     <!--<HomePage/>
     <SignInPage/>
     <SignUpPage/>
@@ -20,6 +21,7 @@ import { RouterView, /*useRouter*/ } from 'vue-router'
 import { useUserStore } from './stores/user'
 import HeaderPage from './components/HeaderPage.vue'
 import FooterPage from './components/FooterPage.vue'
+import ToDoList from './components/ToDoList.vue'
 /*import HomePage from './components/HomePage.vue'*/
 /*import AboutUs from './components/AboutUs.vue'*/
 /*import Collaborators from './components/Collaborators.vue'*/
@@ -40,6 +42,7 @@ onMounted(async () => {
     if (!user.value) {
       console.log('No estas logeado')
       await userStore.signUp("danalmorse@gmail.com", "password")
+
       console.log(user.value)
       /*// redirect them to logout if the user is not there
       router.push({ path: '/auth' });*/

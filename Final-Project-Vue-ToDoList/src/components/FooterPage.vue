@@ -68,7 +68,11 @@
 <!--</div>-->
 </template>
 
-<style scoped>
 
+<style scoped>
+a {
+    text-decoration: none;
+    color: black;
+}
 </style>
 
