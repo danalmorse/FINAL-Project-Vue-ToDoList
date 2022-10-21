@@ -2,7 +2,8 @@
   <div>
     <HeaderPage />
     <RouterView/>
-    <ToDoList/>
+    <!--<ToDoList/>-->
+    <ToDoList2/>
     <!--<HomePage/>
     <SignInPage/>
     <SignUpPage/>
@@ -22,6 +23,7 @@ import { useUserStore } from './stores/user'
 import HeaderPage from './components/HeaderPage.vue'
 import FooterPage from './components/FooterPage.vue'
 import ToDoList from './components/ToDoList.vue'
+import ToDoList2 from './components/ToDoList2.vue'
 /*import HomePage from './components/HomePage.vue'*/
 /*import AboutUs from './components/AboutUs.vue'*/
 /*import Collaborators from './components/Collaborators.vue'*/
