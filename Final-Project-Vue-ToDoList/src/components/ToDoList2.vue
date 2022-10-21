@@ -53,10 +53,11 @@ export default {
 </script>
 
 <template>
-    <div class="container">
+    <div class="bg-light">
+    <div class="container pt-5 pb-5">
         <h2 class="text-center mt-5">Your list of things for today</h2>
         <!--Input-->
-        <div class="d-flex">
+        <div class="d-flex pt-5">
             <input v-model="task" type="text" placeholder="enter task" class="form-control">
             <button @click="submitTask" class="btn btn-warning rounded-0">SUBMIT</button>
         </div>
@@ -103,6 +104,7 @@ export default {
         </table>    
         
     </div>
+</div>
 </template>
 
 <style scoped>
