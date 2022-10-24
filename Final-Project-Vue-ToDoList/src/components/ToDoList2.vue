@@ -55,7 +55,7 @@ export default {
 <template>
     <div class="bg-light">
     <div class="container pt-5 pb-5">
-        <h2 class="text-center mt-5">Your list of things for today</h2>
+        <h2 class="text-center text-muted mt-5">Your list of things for today</h2>
         <!--Input-->
         <div class="d-flex pt-5">
             <input v-model="task" type="text" placeholder="enter task" class="form-control">
@@ -67,8 +67,8 @@ export default {
                 <tr>
                     <th scope="col">Task</th>
                     <th scope="col">Status</th>
-                    <th scope="col" class="text-center">#</th>
-                    <th scope="col" class="text-center">#</th>
+                    <th scope="col" class="text-center">Edit</th>
+                    <th scope="col" class="text-center">Delete</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -102,7 +102,11 @@ export default {
                 
             </tbody>
         </table>    
-        
+    
+    <div class="position-absolute top-90 start-50 translate-middle pt-4">
+                <button type="submit" class="btn btn-primary px-8">Save List of task</button>
+    </div>
+
     </div>
 </div>
 </template>

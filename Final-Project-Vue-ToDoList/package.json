@@ -11,6 +11,7 @@
     "@supabase/supabase-js": "^1.35.7",
     "bootstrap": "^5.2.2",
     "bootstrap-icons": "^1.9.1",
+    "moment": "^2.29.4",
     "pinia": "^2.0.23",
     "pinia-plugin-persist": "^0.0.93",
     "vue": "^3.2.38",

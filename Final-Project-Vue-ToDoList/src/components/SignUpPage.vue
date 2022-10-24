@@ -1,10 +1,119 @@
 <script>
+import { ref } from "vue";
+import { storeToRefs} from "pinia";
+import { useRouter } from "vue-router";
+import { useUserStore} from "./../stores/user.js";
+/*import { supabase } from '../supabase';*/
 
+/*Validation of the sign up form -------------------------------------------------------------
+data() {
+      return {
+        name: "",
+        email: "",
+        errorinfo: {
+            name: "",
+            email: "",
+      },
+      successORerrorMessage: "", este es del fetch API
+      };
+    }, 
+
+    methods: {
+      GoandSubmit(event) {
+        event.preventDefault()
+        this.errorinfo.name="";
+        this.errorinfo.email="";
+
+        let noproceed = false;
+        /*
+         /*---Full Name check in box--------------------------------*/
+        /*if (this.name.length <= 0) {
+          this.errorinfo.name = "Error: invalid name not correct"
+          noproceed = true;
+        }*/
+
+         /*---email check in box with regex email check JS-----------*/
+        /*if (this.email.length === 0 || /^\s+$/.test(this.email)) {
+          this.errorinfo.email = "Error: invalid email address"
+          noproceed = true;
+        }*/
+
+        /*---check in proceeds or not and clean form-----------------*/
+        /*if (noproceed === true){
+          return false;
+        }*/
+
+export default {
+  /*name: "SignUp",*/
+  setup () {
+    // create data / vars
+    const namecomplete = ref (null);
+    const email = ref(null);
+    const password = ref(null);
+    const confirmPassword = ref(null);
+    const errorMsg = ref(null);
+
+    const router = useRouter();
+    const userStore = useUserStore();
+    const { user } = storeToRefs (userStore)
+
+    // Sigup Function
+    /*const register = async () => {*/
+    const onSubmit = async () => {
+      if (password.value === confirmPassword.value) {
+        try {
+          await userStore.signUp ( email.value, password.value)  
+          /* como pongo "please check your email confirmation"*/
+          router.push({ path: "/Sign-In" });
+        
+        /*} catch (e) {
+          console.log(e)
+        },*/
+      } catch (error) { /*Preguntar si esto esta bien ya que no declaro error en const arriba */
+          errorMsg.value = error.message;
+          setTimeout(() => {
+          errorMsg.value = null;
+          }, 5000);
+      } 
+        return; /* Esto no creo que este bien */
+      }
+      errorMsg.value = "Error: Passwords do not match";
+      setTimeout(() => {
+        errorMsg.value = null;
+      }, 5000);
+    };
+          
+          /*const { error } = await supabase.auth.signUp({*/
+          /*  email: email.value,
+            password: password.value,
+          });
+          if (error) throw error;
+          router.push({ name: "SignIn" });
+        } catch (error) {
+          errorMsg.value = error.message;
+          setTimeout(() => {
+          errorMsg.value = null;
+          }, 5000);
+        }
+        return;
+      }
+      errorMsg.value = "Error: Passwords do not match";
+      setTimeout(() => {
+        errorMsg.value = null;
+      }, 5000);
+    };*/
+
+    return { namecomplete, email, password, confirmPassword, errorMsg, onSubmit };
+  },
+
+};
 </script>
 
 <template>
 <section class="vh-100 bg-light">
   <div class="container-sm h-100">
+    
+    <!--Register section-->
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-lg-12 col-xl-11">
         <div class="card text-black" style="border-radius: 25px;">
@@ -20,29 +129,33 @@
                     <span class="h1 fw mb-0">Day To Day Task App</span>
                   </div>
                   <h5 class="fw-normal mb-3 pb-3 text-center" style="letter-spacing: 1px;">SignUp and register an account</h5>
-
-                <form class="mx-1 mx-md-4">
+                
+                <!--Aqui en form hice cambios @submit.prevent="register" prteguntar si esta bien????????????????????????????????????????????-->
+                <form @click="onSubmit" class="mx-1 mx-md-4">
+                  <!--<form @submit.prevent="onSubmit" class="mx-1 mx-md-4">-->
 
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="text" id="form3Example1c" class="form-control" />
+                      <input type="text" required id="form3Example1c" class="form-control" v-model="namecomplete"/>
                       <label class="form-label" for="form3Example1c">Your Name</label>
                     </div>
+                  <!--<span> {{ errorinfo.name }} </span>-->
                   </div>
 
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="email" id="form3Example3c" class="form-control" />
+                      <input type="email" required id="form3Example3c" class="form-control" v-model="email"/>
                       <label class="form-label" for="form3Example3c">Your Email</label>
                     </div>
+                  <!--<span> {{ errorinfo.email }} </span>-->
                   </div>
 
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="password" id="form3Example4c" class="form-control" />
+                      <input type="password" required id="form3Example4c" class="form-control" v-model="password"/>
                       <label class="form-label" for="form3Example4c">Password</label>
                     </div>
                   </div>
@@ -50,20 +163,29 @@
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="password" id="form3Example4cd" class="form-control" />
+                      <input type="password" required id="form3Example4cd" class="form-control" v-model="confirmPassword"/>
                       <label class="form-label" for="form3Example4cd">Repeat your password</label>
                     </div>
                   </div>
 
-                  <div class="form-check d-flex justify-content-center mb-5">
-                    <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
+                  <div class="form-check d-flex justify-content-center mb-2">
+                    <input class="form-check-input me-2" required type="checkbox" value="" id="form2Example3c" />
                     <label class="form-check-label" for="form2Example3">
                       I agree all statements in <a href="#!" class="text-muted">Terms of use</a>
                     </label>
                   </div>
 
+                  <div class="form-check d-flex justify-content-center mb-0">
+                    <p class="mb-3 pb-lg-2" style="color: #393f81;">Already have an account? <RouterLink :to="{ name: 'SignIn' }"><a href="#!"
+                      style="color: #393f81;">Sign In</a></RouterLink></p>
+                  </div>
+
                   <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <button type="button" class="btn btn-secondary btn-lg">Register</button>
+                    <button type="button" class="btn btn-secondary btn-lg duration-200">Register</button>
+                  </div>
+                  <!--Error Handling, preguntar si esta bien???????????????????????????????????-->
+                  <div v-if="errorMsg" class="alert alert-danger text-center">
+                    <p class="text-align-center">{{ errorMsg }}</p>
                   </div>
 
                 </form>

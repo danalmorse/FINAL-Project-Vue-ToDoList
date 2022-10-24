@@ -1,16 +1,40 @@
 <script>
-export default {
-  methods: {
-    currentDate() {
-      const current = new Date();
-      const date = `${current.getDate()}/${
-        current.getMonth() + 1
-      }/${current.getFullYear()}`;
-      return date;
-    },
-  },
+/* Verificar tema LogOut desde aquí: ----------------------*/
+/*import { defineComponent, ref } from "vue";*/
+import { useRouter } from "vue-router";
+import { storeToRefs} from "pinia"
+import { useUserStore } from "./../stores/user.js"
 
-      
+export default { /* continuo por aqui verificar si hay que utilizar el setup y declarar todas estas para el log out */
+    setup () {
+        const router = useRouter();
+        const userStore = useUserStore();
+        const { user } = storeToRefs(userStore);
+
+    
+        const onSubmit = async () => {
+      try {
+        await userStore.signOut ( user )
+        console.log ("logged out"); /*Preguntar como puedo poner una notificacion Log Out */
+        router.push({ path: "/"});
+      }
+      catch (error) {
+        console.log(error)
+      }
+    } 
+    return { onSubmit }
+    },
+    /* Hasta aquí es donde he hecho tema log out---------------- */
+    
+    methods: {
+        currentDate() {
+        const current = new Date();
+        const date = `${current.getDate()}/${
+            current.getMonth() + 1
+        }/${current.getFullYear()}`;
+        return date;
+        },
+    }, 
 };
 </script>
 
@@ -47,6 +71,7 @@ export default {
                     <RouterLink :to="{ name: 'Collaborators' }"><a class="nav-link" href="#">Collaborators</a></RouterLink>
                     <RouterLink :to="{ name: 'SignIn' }"><a class="nav-link" href="#">Sign In</a></RouterLink>
                     <RouterLink :to="{ name: 'SignUp' }"><a class="nav-link" href="#">Sign Up</a></RouterLink>
+                    <li @click="onSubmit" ><a class="nav-link" href="#">Logout</a></li> <!--Aqui he hecho tema @click="onSubmit"-->
                 </div>
             </div>
         </div>
@@ -56,6 +81,6 @@ export default {
 <style scoped>
 a {
     text-decoration: none;
-    
+    /*text-muted;*/
 }
 </style>
