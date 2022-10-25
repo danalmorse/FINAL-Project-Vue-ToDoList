@@ -9,6 +9,7 @@
     <SignUpPage/>
     <AboutUs/>
     <Collaborators/>-->
+    <ToDoList/>
     <FooterPage />
 
   </div>
@@ -16,7 +17,7 @@
 
 <script setup>
 
-import { defineComponent } from 'vue';
+/*import { defineComponent } from 'vue';*/
 import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useUserStore } from './stores/user';
@@ -32,6 +33,7 @@ import FooterPage from './components/FooterPage.vue';
 /*import SignInPage from './components/SignInPage.vue'*/
 /*import SignUpPage from './components/SignUpPage.vue'*/
 import Date from './components/Date.vue'
+import ToDoList from './components/ToDoList.vue';
 
 /*export default defineComponent ({*/
 

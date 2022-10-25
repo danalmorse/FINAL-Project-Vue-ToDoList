@@ -14,7 +14,6 @@ data() {
             name: "",
             email: "",
       },
-      successORerrorMessage: "", este es del fetch API
       };
     }, 
 
@@ -45,21 +44,49 @@ data() {
 
 export default {
   /*name: "SignUp",*/
+  
+
   setup () {
     // create data / vars
-    const namecomplete = ref (null);
-    const email = ref(null);
+    const namecomplete = ref ("");
+    const email = ref("");
     const password = ref(null);
     const confirmPassword = ref(null);
     const errorMsg = ref(null);
+    const checked = ref(null);
+    
+    /*Estos a ver si puedo hacer el error en formulario */
+    const errorMsg2 = ref(null);
+    const errorMsg3 = ref(null);
 
     const router = useRouter();
     const userStore = useUserStore();
     const { user } = storeToRefs (userStore)
 
+    /* verificar tema de errores formulario de aqui*/
+    /*const errorinfo = "";*/
+    let noproceed = false;
+    /* hasta aqui */
+    
     // Sigup Function
     /*const register = async () => {*/
     const onSubmit = async () => {
+      
+      /* revisar tambien tema formulario de aqui*/
+       /*---Full Name check in box--------------------------------*/
+        if (namecomplete.value.length <= 0) {
+          errorMsg2.value = "Error: invalid name not correct"
+          noproceed = true;
+        }
+
+         /*---email check in box with regex email check JS-----------*/
+        if (email.value.length === 0 || /^\s+$/.test(email.value)) {
+          errorMsg3.value = "Error: invalid email address"
+          noproceed = true;
+        }
+
+        
+      /* hasta aqui------------------------------------------------------------------*/
       if (password.value === confirmPassword.value) {
         try {
           await userStore.signUp ( email.value, password.value)  
@@ -81,6 +108,11 @@ export default {
       setTimeout(() => {
         errorMsg.value = null;
       }, 5000);
+
+      /*---check in proceeds or not and clean form-----------------*/
+      if (noproceed === true){
+          return false;
+        }
     };
           
           /*const { error } = await supabase.auth.signUp({*/
@@ -103,7 +135,7 @@ export default {
       }, 5000);
     };*/
 
-    return { namecomplete, email, password, confirmPassword, errorMsg, onSubmit };
+    return { namecomplete, email, password, confirmPassword, errorMsg, checked, onSubmit, errorMsg2, errorMsg3 }; /*verificar si errorMsg 2 y 3 dan bien */
   },
 
 };
@@ -131,45 +163,49 @@ export default {
                   <h5 class="fw-normal mb-3 pb-3 text-center" style="letter-spacing: 1px;">SignUp and register an account</h5>
                 
                 <!--Aqui en form hice cambios @submit.prevent="register" prteguntar si esta bien????????????????????????????????????????????-->
-                <form @click="onSubmit" class="mx-1 mx-md-4">
+                <form @submit.prevent="onSubmit" class="mx-1 mx-md-4">
                   <!--<form @submit.prevent="onSubmit" class="mx-1 mx-md-4">-->
 
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="text" required id="form3Example1c" class="form-control" v-model="namecomplete"/>
-                      <label class="form-label" for="form3Example1c">Your Name</label>
+                      <input type="text" required id="form3Example1c" class="form-control" placeholder="Your name" v-model="namecomplete"/>
+                      <!--<label class="form-label" for="form3Example1c">Your Name</label>-->
+                      <span> {{ errorMsg2 }} </span>
                     </div>
-                  <!--<span> {{ errorinfo.name }} </span>-->
+                  <!--Aqui es donde estoy poniendo error formulario preguntar???
+                  <span> {{ errorinfo.namecomplete }} </span>-->
                   </div>
 
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="email" required id="form3Example3c" class="form-control" v-model="email"/>
-                      <label class="form-label" for="form3Example3c">Your Email</label>
+                      <input type="email" required id="form3Example3c" class="form-control" placeholder="Your email" v-model="email"/>
+                      <!--<label class="form-label" for="form3Example3c">Your Email</label>-->
+                      <span> {{ errorMsg3 }} </span>
                     </div>
-                  <!--<span> {{ errorinfo.email }} </span>-->
+                  <!--Aqui es donde estoy poniendo error formulario preguntar???
+                  <span> {{ errorinfo.email }} </span>-->
                   </div>
 
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="password" required id="form3Example4c" class="form-control" v-model="password"/>
-                      <label class="form-label" for="form3Example4c">Password</label>
+                      <input type="password" required id="form3Example4c" class="form-control" placeholder="password" v-model="password"/>
+                      <!--<label class="form-label" for="form3Example4c">Password</label>-->
                     </div>
                   </div>
 
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="password" required id="form3Example4cd" class="form-control" v-model="confirmPassword"/>
-                      <label class="form-label" for="form3Example4cd">Repeat your password</label>
+                      <input type="password" required id="form3Example4cd" class="form-control" placeholder="Repeat your password" v-model="confirmPassword"/>
+                      <!--<label class="form-label" for="form3Example4cd">Repeat your password</label>-->
                     </div>
                   </div>
 
                   <div class="form-check d-flex justify-content-center mb-2">
-                    <input class="form-check-input me-2" required type="checkbox" value="" id="form2Example3c" />
+                    <input class="form-check-input me-2" required type="checkbox" value="" id="form2Example3c" v-model="checked"/>
                     <label class="form-check-label" for="form2Example3">
                       I agree all statements in <a href="#!" class="text-muted">Terms of use</a>
                     </label>
@@ -181,7 +217,7 @@ export default {
                   </div>
 
                   <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <button type="button" class="btn btn-secondary btn-lg duration-200">Register</button>
+                    <button type="submit" class="btn btn-secondary btn-lg duration-200">Register</button>
                   </div>
                   <!--Error Handling, preguntar si esta bien???????????????????????????????????-->
                   <div v-if="errorMsg" class="alert alert-danger text-center">

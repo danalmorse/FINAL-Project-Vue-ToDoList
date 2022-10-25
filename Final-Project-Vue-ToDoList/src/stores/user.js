@@ -12,7 +12,7 @@ export const useUserStore = defineStore("user", {
     async fetchUser() {
       /*const user = await supabase.auth.user(); /* supabase user function v1*/
       const { user, error } = await supabase.auth.api.getUser(); /*Supabase GetUser v1 */
-      console.log(user)
+      console.log(user.value)
       if (user) {
         this.user = user;
       };
@@ -20,23 +20,21 @@ export const useUserStore = defineStore("user", {
     }, /*bien  */
     
     async signUp(email, password) {
-      const { user, session, error } = await supabase.auth.signUp({ /*Preguntar si esta bien Supabase v1 SignUp function */
+      const { user, error } = await supabase.auth.signUp({ /*Preguntar si esta bien Supabase v1 SignUp function */
         email: email,
         password: password,
       });
       if (error) throw error;
-      if (session) console.log(session); /*Preguntar si esto es asi? */
       if (user) this.user = user;
     },
     /* lo nuevo-------------Preguntar si esta bien---------------------------------------------------*/
     async signIn ( email, password ) {
       try {
-        const { user, session, error } = await supabase.auth.signIn({ /*Preguntar si es esta bien utilice supabase signIn function */
+        const { user, error } = await supabase.auth.signIn({ /*Preguntar si es esta bien utilice supabase signIn function */
           email: email,
           password: password
         });
         if (user) this.user = user;
-        if (session) console.log(session); /*Preguntar si esto es asi? */
         if (error) throw error; 
       }
       catch (error) {
@@ -45,7 +43,7 @@ export const useUserStore = defineStore("user", {
     },
     async signOut() {
       const { error } = await supabase.auth.signOut();
-
+      this.user = null;
       if (error) console.log(error);
     },
   },

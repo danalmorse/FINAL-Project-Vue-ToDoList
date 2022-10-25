@@ -128,7 +128,7 @@ export default defineComponent ({
               <div class="card-body p-4 p-lg-5 text-black">
                 
                 <!--Aqui en form hice cambios @submit.prevent="register"-->
-                <form @click="onSubmit" class="mx-1 mx-md-4">
+                <form @submit.prevent="onSubmit" class="mx-1 mx-md-4">
                   <!--<form @submit.prevent="onSubmit" @reset="onReset" class="mx-1 mx-md-4"></form>-->
 
                   <div class="d-flex align-items-center mb-3 pb-1">
@@ -143,19 +143,19 @@ export default defineComponent ({
                   <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">SignIn into your account</h5>
 
                   <div class="form-outline mb-4">
-                    <input type="email" required id="form2Example17" class="form-control form-control-lg" v-model="email"/>
-                    <label class="form-label" for="form2Example17">Email address</label>
+                    <input type="email" required id="form2Example17" class="form-control form-control-lg" placeholder="Email address" v-model="email"/>
+                    <!--<label class="form-label" for="form2Example17">Email address</label>-->
                   <!--<span> {{ errorinfo.email }} </span>-->
                   </div>
 
                   <div class="form-outline mb-4">
-                    <input type="password" required id="form2Example27" class="form-control form-control-lg" v-model="password"/>
-                    <label class="form-label" for="form2Example27">Password</label>
+                    <input type="password" required id="form2Example27" class="form-control form-control-lg" placeholder="Password" v-model="password"/>
+                    <!--<label class="form-label" for="form2Example27">Password</label>-->
                   <!--<span> {{ errorinfo.password }} </span>-->
                   </div>
 
                   <div class="pt-1 mb-4">
-                    <button class="btn btn-secondary btn-lg btn-block duration-200" type="button">Sign In</button>
+                    <button class="btn btn-secondary btn-lg btn-block duration-200" type="submit">Sign In</button>
                   </div>
 
                   <a class="small text-muted" href="#!">Forgot password?</a>

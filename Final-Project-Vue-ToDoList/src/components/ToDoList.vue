@@ -1,81 +1,141 @@
+<!-- eslint-disable prettier/prettier -->
 <script>
 
+import { defineComponent, reactive, ref } from 'vue'
+
+export default defineComponent({
+    setup () {
+        const task = ref("")
+        const editedTask = ref(null)
+        const availableStatuses = ["to-do", "in-progress", "finished"]
+        let tasks = reactive ([
+                        {
+                        name: "New task",
+                        status: "to-do",
+                        },
+                        ],)
+
+        function submitTask() {
+            console.log(tasks)
+            if (task.value.length === 0) 
+                return;
+
+            if (editedTask.value === null) {
+                tasks.push({
+                        name: task.value,
+                        status: "to-do",
+                        });
+            } else {
+                tasks[editedTask.value].name = task.value;
+                editedTask.value = null;
+            }
+            task.value = "";
+            console.log(task)
+            }
+
+            function deleteTask(index) {
+                tasks.splice(index, 1);
+            }
+
+            function editTask(index) {
+                task.value = tasks[index].name;
+                editedTask.value = index;
+            }
+            
+            function changeStatus(index) {
+                console.log(tasks)
+                let newIndex = availableStatuses.indexOf(tasks[index].status);
+                if (++newIndex > 2) newIndex = 0;
+                tasks[index].status = availableStatuses[newIndex];
+            }
+
+
+
+        return { task, editedTask, availableStatuses, tasks, submitTask, deleteTask, editTask, changeStatus}
+    }
+}) ;
+
+ 
 </script>
 
+
 <template>
-<section class="vh-100" style="background-color: #eee;">
-  <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col col-lg-9 col-xl-7">
-        <div class="card rounded-3">
-          <div class="card-body p-4">
-
-            <h4 class="text-center my-3 pb-3">To Do App</h4>
-
-            <form class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2">
-              <div class="col-12">
-                <div class="form-outline">
-                  <input type="text" id="form1" class="form-control" />
-                  <label class="form-label" for="form1">Enter a task here</label>
-                </div>
+  <div class="bg-light">
+    <div class="container pt-5 pb-5">
+      <h2 class="text-center text-muted mt-5">Your list of things for today</h2>
+      <!--Input-->
+      <div class="d-flex pt-5">
+        <input
+          v-model="task"
+          type="text"
+          placeholder="enter task"
+          class="form-control"
+        />
+        <button @click="submitTask" class="btn btn-warning rounded-0">
+          SUBMIT
+        </button>
+      </div>
+      <!--Task Table-->
+      <table class="table table-bordered mt-5">
+        <thead>
+          <tr>
+            <th scope="col">Task</th>
+            <th scope="col">Status</th>
+            <th scope="col" class="text-center">Edit</th>
+            <th scope="col" class="text-center">Delete</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          <tr v-for="(task, index) in tasks" :key="index">
+            <td style="width: 500px">
+              <span :class="{ finished: task.status === 'finished' }">
+                {{ task.name }}
+              </span>
+            </td>
+            <td style="width: 120px">
+              <span
+                @click="changeStatus(index)"
+                class="pointer"
+                :class="{
+                  'text-danger': task.status === 'to-do',
+                  'text-warning': task.status === 'in-progress',
+                  'text-success': task.status === 'finished',
+                }"
+              >
+                {{ task.status }}
+              </span>
+            </td>
+            <td>
+              <div class="text-center" @click="editTask(index)">
+                <button type="submit" class="btn btn-success ms-1">Edit</button>
+                <span class="bi bi-pencil-fill"></span>
               </div>
-
-              <div class="col-12">
-                <button type="submit" class="btn btn-primary">Save</button>
+            </td>
+            <td>
+              <div class="text-center" @click="deleteTask(index)">
+                <button type="submit" class="btn btn-danger">Delete</button>
+                <span class="bi bi-trash-fill"></span>
               </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-              <div class="col-12">
-                <button type="submit" class="btn btn-warning">Get tasks</button>
-              </div>
-            </form>
-
-            <table class="table mb-4">
-              <thead>
-                <tr>
-                  <th scope="col">No.</th>
-                  <th scope="col">Todo item</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Buy groceries for next week</td>
-                  <td>In progress</td>
-                  <td>
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                    <button type="submit" class="btn btn-success ms-1">Finished</button>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Renew car insurance</td>
-                  <td>In progress</td>
-                  <td>
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                    <button type="submit" class="btn btn-success ms-1">Finished</button>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Sign up for online course</td>
-                  <td>In progress</td>
-                  <td>
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                    <button type="submit" class="btn btn-success ms-1">Finished</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-
-          </div>
-        </div>
+      <div class="position-absolute top-90 start-50 translate-middle pt-4">
+        <button type="submit" class="btn btn-primary px-8">
+          Save List of task
+        </button>
       </div>
     </div>
   </div>
-</section>
-
 </template>
 
-<style scoped></style>
+<style scoped>
+.pointer {
+  cursor: pointer;
+}
+
+.finished {
+  text-decoration: line-through;
+}
+</style>

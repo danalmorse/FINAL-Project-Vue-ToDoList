@@ -1,5 +1,51 @@
 <script>
 
+/*acceder al store llamar al fetch user mirar si existe o no */
+/*import { ref } from 'vue';
+
+const task = ref ("");
+const editedTask = ref(null);
+const availableStatuses = ['to-do', 'in-progress', 'finished'];
+const tasks = [
+                {
+                    name: 'New task                                         ',
+                    status: 'to-do'
+                },
+            ];
+
+function submitTask () {
+    if (task.value.length === 0)
+            return;
+
+            if (editedTask.value === null) {
+                tasks.value.push({
+                    number: '',
+                    name: task.value,
+                    status: 'to-do'
+                });
+            } else {
+                tasks.value[editedTask.value].name = task.value;
+                editedTask.value = null;
+            }
+            task.value = '';
+        }
+
+        function deleteTask(index) {
+            tasks.value.splice(index, 1);
+        }
+
+        function editTask(index) {
+           task.value = tasks.value[index].name; 
+           editedTask.value = index;
+        }
+
+        function changeStatus(index) {
+            const newIndex = availableStatuses.value.indexOf(tasks.value[index].status);
+            if (++newIndex > 2) newIndex = 0;
+            tasks.value[index].status = availableStatuses.value[newIndex];
+        }*/
+
+
 export default {
     data() {
         return {
@@ -48,7 +94,33 @@ export default {
             if (++newIndex > 2) newIndex = 0;
             this.tasks[index].status = this.availableStatuses[newIndex];
         },
-    }
+    },
+
+
+    /*async mounted () {
+        try {
+        await userStore.fetchUser() // here we call fetch user
+        console.log(user.value)
+        if (!user.value) {
+          console.log('No estas logeado')
+          /*await userStore.signUp("danalmorse@gmail.com", "password")*/
+          /*console.log(user.value)*/
+
+          // redirect them to logout if the user is not there
+          /*router.push({ path: '/Sign-In' });
+
+        } else {
+          console.log('Estas logeado')
+          console.log(user.value)
+          // continue to dashboard
+          router.push({ path: '/To-Do-List' });
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    }*/
+    /*mounted hacer fetch user para ver si usuario esta conectado sino redirigir*/
+
 };
 </script>
 
