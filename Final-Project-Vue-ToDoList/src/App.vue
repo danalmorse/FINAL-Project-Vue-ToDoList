@@ -9,7 +9,7 @@
     <SignUpPage/>
     <AboutUs/>
     <Collaborators/>-->
-    <ToDoList/>
+    <!--<ToDoList/>-->
     <FooterPage />
 
   </div>
@@ -33,7 +33,7 @@ import FooterPage from './components/FooterPage.vue';
 /*import SignInPage from './components/SignInPage.vue'*/
 /*import SignUpPage from './components/SignUpPage.vue'*/
 import Date from './components/Date.vue'
-import ToDoList from './components/ToDoList.vue';
+/*import ToDoList from './components/ToDoList.vue';*/
 
 /*export default defineComponent ({*/
 

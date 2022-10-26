@@ -1,7 +1,14 @@
 <!-- eslint-disable prettier/prettier -->
 <script>
 
-import { defineComponent, reactive, ref } from 'vue'
+import { defineComponent, reactive, ref, onMounted } from 'vue'
+import { storeToRefs } from 'pinia';
+import { useUserStore } from '../stores/user';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const userStore = useUserStore();
+const { user } = storeToRefs(userStore);
 
 export default defineComponent({
     setup () {
@@ -52,8 +59,34 @@ export default defineComponent({
 
 
         return { task, editedTask, availableStatuses, tasks, submitTask, deleteTask, editTask, changeStatus}
-    }
+    },
+
+    
 }) ;
+
+onMounted (async () => {
+        try {
+        await userStore.fetchUser() // here we call fetch user
+        console.log(user.value)
+        if (!user.value) {
+          console.log('No estas logeado')
+          /*await userStore.signUp("danalmorse@gmail.com", "password")*/
+          console.log(user.value)
+
+          // redirect them to logout if the user is not there
+          router.push({ path: '/Sign-In' });
+
+        } else {
+          console.log('Estas logeado')
+          console.log(user.value)
+          // continue to dashboard
+          router.push({ path: '/To-Do-List' });
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    });
+
 
  
 </script>
