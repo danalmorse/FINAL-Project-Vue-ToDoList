@@ -1,96 +1,89 @@
 <!-- eslint-disable prettier/prettier -->
-<script>
-
-import { defineComponent, reactive, ref, onMounted } from 'vue'
-import { storeToRefs } from 'pinia';
-import { useUserStore } from '../stores/user';
-import { useRouter } from 'vue-router';
+<script setup>
+import { reactive, ref, onMounted } from "vue";
+import { storeToRefs } from "pinia";
+import { useUserStore } from "../stores/user.js";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 const userStore = useUserStore();
 const { user } = storeToRefs(userStore);
 
-export default defineComponent({
-    setup () {
-        const task = ref("")
-        const editedTask = ref(null)
-        const availableStatuses = ["to-do", "in-progress", "finished"]
-        let tasks = reactive ([
-                        {
-                        name: "New task",
-                        status: "to-do",
-                        },
-                        ],)
+/*export default defineComponent({
+    setup () {*/
+const task = ref("");
+const editedTask = ref(null);
+const availableStatuses = ["to-do", "in-progress", "finished"];
+let tasks = reactive([
+  {
+    name: "New task",
+    status: "to-do",
+  },
+]);
 
-        function submitTask() {
-            console.log(tasks)
-            if (task.value.length === 0) 
-                return;
+function submitTask() {
+  console.log(tasks);
+  if (task.value.length === 0) return;
 
-            if (editedTask.value === null) {
-                tasks.push({
-                        name: task.value,
-                        status: "to-do",
-                        });
-            } else {
-                tasks[editedTask.value].name = task.value;
-                editedTask.value = null;
-            }
-            task.value = "";
-            console.log(task)
-            }
-
-            function deleteTask(index) {
-                tasks.splice(index, 1);
-            }
-
-            function editTask(index) {
-                task.value = tasks[index].name;
-                editedTask.value = index;
-            }
-            
-            function changeStatus(index) {
-                console.log(tasks)
-                let newIndex = availableStatuses.indexOf(tasks[index].status);
-                if (++newIndex > 2) newIndex = 0;
-                tasks[index].status = availableStatuses[newIndex];
-            }
-
-
-
-        return { task, editedTask, availableStatuses, tasks, submitTask, deleteTask, editTask, changeStatus}
-    },
-
-    
-}) ;
-
-onMounted (async () => {
-        try {
-        await userStore.fetchUser() // here we call fetch user
-        console.log(user.value)
-        if (!user.value) {
-          console.log('No estas logeado')
-          /*await userStore.signUp("danalmorse@gmail.com", "password")*/
-          console.log(user.value)
-
-          // redirect them to logout if the user is not there
-          router.push({ path: '/Sign-In' });
-
-        } else {
-          console.log('Estas logeado')
-          console.log(user.value)
-          // continue to dashboard
-          router.push({ path: '/To-Do-List' });
-        }
-      } catch (e) {
-        console.log(e)
-      }
+  if (editedTask.value === null) {
+    tasks.push({
+      name: task.value,
+      status: "to-do",
     });
+  } else {
+    tasks[editedTask.value].name = task.value;
+    editedTask.value = null;
+  }
+  task.value = "";
+  console.log(task);
+}
+
+function deleteTask(index) {
+  tasks.splice(index, 1);
+}
+
+function editTask(index) {
+  task.value = tasks[index].name;
+  editedTask.value = index;
+}
+
+function changeStatus(index) {
+  console.log(tasks);
+  let newIndex = availableStatuses.indexOf(tasks[index].status);
+  if (++newIndex > 2) newIndex = 0;
+  tasks[index].status = availableStatuses[newIndex];
+}
+
+onMounted(async () => {
+  try {
+    await userStore.fetchUser(); // here we call fetch user
+    console.log(user.value);
+    if (!user.value) {
+      console.log("No estas logeado");
+      /*await userStore.signUp("danalmorse@gmail.com", "password")*/
+      console.log(user.value);
+
+      // redirect them to logout if the user is not there
+      router.push({ path: "/Sign-In" });
+    } else {
+      console.log("Estas logeado");
+      console.log(user.value);
+      // continue to dashboard
+      router.push({ path: "/To-Do-List" });
+    }
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+/*return { task, editedTask, availableStatuses, tasks, submitTask, deleteTask, editTask, changeStatus, onMounted}
 
 
- 
+    },
+    
+    
+});*/
 </script>
-
 
 <template>
   <div class="bg-light">

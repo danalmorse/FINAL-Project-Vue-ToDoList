@@ -1,5 +1,8 @@
+import { useUserStore } from "../stores/user";
+import { storeToRefs } from "pinia";
 import { createRouter, createWebHistory } from "vue-router";
 /*import HeaderPage from "../views/HomeView.vue";*/
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,10 +35,18 @@ const router = createRouter({
     {
       path: "/To-Do-List",
       name: "ToDoList",
-      component: () => import('../components/ToDoList.vue')
+      component: () => import('../components/ToDoList.vue'),
+      meta: { requiresAuth: true }
       /*component: () => import('../components/ToDoList2.vue')*/
     },
   ],
+})
+
+router.beforeEach((to)=> {
+  const userStore = useUserStore();
+  const { user } = storeToRefs(userStore);
+  if (to.meta.requiresAuth && !user.value) return "/";
+  
 });
 
 export default router;

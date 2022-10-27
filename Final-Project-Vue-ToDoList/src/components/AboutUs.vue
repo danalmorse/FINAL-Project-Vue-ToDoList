@@ -12,7 +12,7 @@
           <h2 class="featurette-heading fw-normal lh-1">We are The Time Company, inc.</h2>
           <p class="lead">A great workplace combines exceptional people with challenging problems.</p>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-5 order-md-1">
           <img src="https://clickup.com/landing/images/careers/clickup-people.png" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false">
             <title>Placeholder</title>
             <rect width="100%" height="100%" fill="#eee">

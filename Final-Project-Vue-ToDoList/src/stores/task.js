@@ -18,3 +18,12 @@ export const useTaskStore = defineStore('tasks', {
   }
 });
 
+async fetchUser() {
+  /*const user = await supabase.auth.user(); /* supabase user function v1*/
+  const { user, error } = await supabase.auth.api.getUser(); /*Supabase GetUser v1 */
+  console.log(user.value)
+  if (user) {
+    this.user = user;
+  };
+  if (error) throw error; /*Preguntar si esta bien poner este if si es error por utilizar la funcion getUser supabase v1*/
+}, /*bien  */
