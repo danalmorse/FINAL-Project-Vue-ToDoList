@@ -5,6 +5,7 @@ import { storeToRefs } from "pinia";
 import { useUserStore } from "../stores/user.js";
 import { useTaskStore } from "../stores/task.js";
 import { useRouter } from "vue-router";
+import moment from 'moment';
 
 /*const router = useRouter();*/
 // User Store variables
@@ -12,8 +13,8 @@ const userStore = useUserStore();
 const { user } = storeToRefs(userStore);
 
 // task Store variables
-const taskStore = useTaskStore()
-const { tasks } = storeToRefs(taskStore)
+const taskStore = useTaskStore();
+const { tasks } = storeToRefs(taskStore);
 
 /*let taskList = reactive(tasks)*/
 
@@ -50,6 +51,7 @@ const triggerModal = computed({
 });*/
 
 // Creating new Task
+
 const title = ref("");
 
 const createNew = async () => {
@@ -70,6 +72,16 @@ const createNew = async () => {
     console.log(e);
     }
 };
+
+// Edit Task
+/*const { errors } = storeToRefs(taskStore);
+let errorMsg = reactive(errors);*/
+/*let isError = ref(false)*/
+/*onMounted(async () => {
+    errorMsg.value = null
+});*/
+
+
 
 // Showing if task is complete
 
@@ -101,7 +113,8 @@ const remove = async (taskId) => {
 <template>
   <div class="bg-light">
     <div class="container pt-5 pb-5">
-      <h2 class="text-center text-muted mt-5">Your list of things for today</h2>
+      <h2 class="text-center text-muted mt-5">Your list of things for today <span class="font-weight-bold text-primary">{{ user.email }}</span>!!!</h2>
+      <h3 class="text-center text-primary">{{ moment().format("ddd, MMM Do YYYY, h:mm a")}}</h3>
       <!--Input-->
       <!--Agregue el form-->
       <form @submit.prevent="createNew">
@@ -109,10 +122,10 @@ const remove = async (taskId) => {
           <input
             v-model="title"
             type="text"
-            placeholder="enter task"
+            placeholder="--> enter task <--"
             class="form-control"
           />
-          <button type="submit" class="btn btn-warning rounded-0">
+          <button id="myCreateBtn" type="submit" class="btn btn-warning rounded-0">
             Create
           </button>
           <!--<button @click="submitTask" class="btn btn-warning rounded-0">
@@ -135,7 +148,7 @@ const remove = async (taskId) => {
       <table class="table table-bordered mt-5">
         <thead>
           <tr>
-            <th scope="col">Task</th>
+            <th scope="col">Tasks list by order of entry</th>
             <th scope="col">Completed?</th>
             <th scope="col" class="text-center">Edit</th>
             <th scope="col" class="text-center">Delete</th>
@@ -157,13 +170,18 @@ const remove = async (taskId) => {
                 </div>
             </td>
 
-            <td>
-              <div class="text-center" @click="editTask(index)">
-                <button type="submit" class="btn btn-success ms-1">Edit</button>
+            <td style="width: 10%">
+                <!--<div class="text-center" @click="modifyTask(task.id, task.newTitle)">-->
+              <div class="text-center">
+                <router-link :to="{ name: 'EditTaskList', params: { id: task.id }, query: { title: task.title } }"
+                    class="text-decoration-none text-reset">
+                    <button type="submit" class="btn btn-success ms-1">Edit</button>
+                </router-link>
+                
                 <span class="bi bi-pencil-fill"></span>
               </div>
             </td>
-            <td>
+            <td style="width: 10%">
               <div class="text-center" @click="remove(task.id)">
               <!--<div class="text-center" @click="deleteTask(index)">-->
                 <button type="submit" class="btn btn-danger">Delete</button>
@@ -174,11 +192,6 @@ const remove = async (taskId) => {
         </tbody>
       </table>
 
-      <div class="position-absolute top-90 start-50 translate-middle pt-4">
-        <button type="submit" class="btn btn-primary px-8">
-          Save List of task
-        </button>
-      </div>
     </div>
   </div>
 </template>
@@ -186,6 +199,10 @@ const remove = async (taskId) => {
 <style scoped>
 .pointer {
   cursor: pointer;
+}
+
+#myCreateBtn:hover {
+    background-color: #dfa926;
 }
 
 .finished {

@@ -36,8 +36,13 @@ const router = createRouter({
       path: "/To-Do-List",
       name: "ToDoList",
       component: () => import('../components/ToDoList.vue'),
-      meta: { requiresAuth: true }
-      /*component: () => import('../components/ToDoList2.vue')*/
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/:id',
+      name: 'EditTaskList',
+      component: () => import('../components/EditTaskInList.vue'),
+      params: true,
     },
   ],
 })

@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { storeToRefs} from "pinia";
 import { useRouter } from "vue-router";
 import { useUserStore} from "./../stores/user.js";
-/*import { supabase } from '../supabase';*/
+
 
 
 export default {

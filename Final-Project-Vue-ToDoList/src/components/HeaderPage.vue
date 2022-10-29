@@ -2,8 +2,9 @@
 /* Verificar tema LogOut desde aquí: ----------------------*/
 /*import { defineComponent, ref } from "vue";*/
 import { useRouter } from "vue-router";
-import { storeToRefs} from "pinia"
-import { useUserStore } from "./../stores/user.js"
+import { storeToRefs} from "pinia";
+import { useUserStore } from "./../stores/user.js";
+import { moment } from 'moment';
 
 export default { /* continuo por aqui verificar si hay que utilizar el setup y declarar todas estas para el log out */
     setup () {

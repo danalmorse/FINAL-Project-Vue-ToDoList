@@ -1,54 +1,12 @@
 <script>
-/*import { RouterLink } from 'vue-router';*/
-
 import { defineComponent, ref } from "vue";
-/*import { supabase } from '../supabase';*/
 import { useRouter } from "vue-router";
 import { storeToRefs} from "pinia"
 import { useUserStore } from "./../stores/user.js"
 
-/*Validation of the sign up form -------------------------------------------------------------
-data() {
-      return {
-        email: "",
-        password: "",
-        errorinfo: {
-            email: "",
-            password: "",
-      },
-      successORerrorMessage: "", este es del fetchAPI
-      };
-    }, 
-
-    methods: {
-      GoandSubmit(event) {
-        event.preventDefault()
-        this.errorinfo.email="";
-        this.errorinfo.password="";
-
-        let noproceed = false;
-        /*
-         /*---Full Name check in box--------------------------------*/
-        /*if (this.password.length <= 0) {
-          this.errorinfo.password = "Error: invalid name not correct"
-          noproceed = true;
-        }*/
-
-         /*---email check in box with regex email check JS-----------*/
-        /*if (this.email.length === 0 || /^\s+$/.test(this.email)) {
-          this.errorinfo.email = "Error: invalid email address"
-          noproceed = true;
-        }*/
-
-        /*---check in proceeds or not and clean form-----------------*/
-        /*if (noproceed === true){
-          return false;
-        }*/
-
 
 export default defineComponent ({
-  /* export default {
-  name: "SignIn",*/
+  
   setup () {
     //Create data/ vars
     const email = ref(null);
