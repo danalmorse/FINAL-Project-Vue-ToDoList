@@ -1,3 +1,5 @@
+<!-- Este componente no va -->
+
 <script>
 
 /*acceder al store llamar al fetch user mirar si existe o no */

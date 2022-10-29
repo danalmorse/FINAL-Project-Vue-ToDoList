@@ -1,88 +1,101 @@
-<!-- eslint-disable prettier/prettier -->
+<!-- This is the right ToDoList component / eslint-disable prettier/prettier -->
 <script setup>
-import { reactive, ref, onMounted } from "vue";
+import { reactive, ref, onMounted, computed } from "vue";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "../stores/user.js";
+import { useTaskStore } from "../stores/task.js";
 import { useRouter } from "vue-router";
 
-const router = useRouter();
+/*const router = useRouter();*/
+// User Store variables
 const userStore = useUserStore();
 const { user } = storeToRefs(userStore);
 
-/*export default defineComponent({
-    setup () {*/
-const task = ref("");
-const editedTask = ref(null);
-const availableStatuses = ["to-do", "in-progress", "finished"];
-let tasks = reactive([
-  {
-    name: "New task",
-    status: "to-do",
-  },
-]);
+// task Store variables
+const taskStore = useTaskStore()
+const { tasks } = storeToRefs(taskStore)
 
-function submitTask() {
-  console.log(tasks);
-  if (task.value.length === 0) return;
+/*let taskList = reactive(tasks)*/
 
-  if (editedTask.value === null) {
-    tasks.push({
-      name: task.value,
-      status: "to-do",
-    });
-  } else {
-    tasks[editedTask.value].name = task.value;
-    editedTask.value = null;
-  }
-  task.value = "";
-  console.log(task);
-}
 
-function deleteTask(index) {
-  tasks.splice(index, 1);
-}
-
-function editTask(index) {
-  task.value = tasks[index].name;
-  editedTask.value = index;
-}
-
-function changeStatus(index) {
-  console.log(tasks);
-  let newIndex = availableStatuses.indexOf(tasks[index].status);
-  if (++newIndex > 2) newIndex = 0;
-  tasks[index].status = availableStatuses[newIndex];
-}
 
 onMounted(async () => {
   try {
-    await userStore.fetchUser(); // here we call fetch user
-    console.log(user.value);
-    if (!user.value) {
-      console.log("No estas logeado");
-      /*await userStore.signUp("danalmorse@gmail.com", "password")*/
-      console.log(user.value);
-
-      // redirect them to logout if the user is not there
-      router.push({ path: "/Sign-In" });
-    } else {
-      console.log("Estas logeado");
-      console.log(user.value);
-      // continue to dashboard
-      router.push({ path: "/To-Do-List" });
-    }
+    await taskStore.fetchTasks()
   } catch (e) {
-    console.log(e);
+    console.log(e)
   }
 });
 
-/*return { task, editedTask, availableStatuses, tasks, submitTask, deleteTask, editTask, changeStatus, onMounted}
+//Displaying errors in banner
 
-
-    },
-    
-    
+/*const { errors } = storeToRefs(taskStore);
+let errorMsg = reactive(errors);
+let isError = ref(false);
+onMounted(async () => {
+  errorMsg.value = null
+});
+const showError = computed({
+  set: (value) => {
+    isError.value = value;
+  },
 });*/
+
+//Showing waiting animation
+/*let loading = ref(false);
+const triggerModal = computed({
+  set: (value) => {
+    loading.value = value;
+  },
+});*/
+
+// Creating new Task
+const title = ref("");
+
+const createNew = async () => {
+  const newTask = {
+    user_id: user.value.id,
+    title: title,
+    is_complete: false,
+    /*inserted_at: new Date(),*/
+    };
+    try {
+        await taskStore.createTask(newTask);
+        await taskStore.fetchTasks();
+        title.value = '';
+        /*if (errorMsg.value != null) {
+        showError.value = true;
+        }*/
+    } catch (e) {
+    console.log(e);
+    }
+};
+
+// Showing if task is complete
+
+const completed = async (taskId, isComplete) => {
+    try {
+        isComplete = !isComplete
+        await taskStore.toogleCompleted(taskId, isComplete)
+        await taskStore.fetchTasks()
+        
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+// Deleting Task
+const remove = async (taskId) => {
+    try {
+        await taskStore.deleteTask(taskId)
+        await taskStore.fetchTasks()
+    } catch (e) {
+        console.log(e)
+    }
+};
+
+
+
 </script>
 
 <template>
@@ -90,47 +103,60 @@ onMounted(async () => {
     <div class="container pt-5 pb-5">
       <h2 class="text-center text-muted mt-5">Your list of things for today</h2>
       <!--Input-->
-      <div class="d-flex pt-5">
-        <input
-          v-model="task"
-          type="text"
-          placeholder="enter task"
-          class="form-control"
-        />
-        <button @click="submitTask" class="btn btn-warning rounded-0">
+      <!--Agregue el form-->
+      <form @submit.prevent="createNew">
+        <div class="d-flex pt-5">
+          <input
+            v-model="title"
+            type="text"
+            placeholder="enter task"
+            class="form-control"
+          />
+          <button type="submit" class="btn btn-warning rounded-0">
+            Create
+          </button>
+          <!--<button @click="submitTask" class="btn btn-warning rounded-0">
           SUBMIT
-        </button>
-      </div>
+        </button>-->
+        </div>
+      </form>
+
+      <!--OTra cosa agregada de A-->
+      <!-- Error banner-->
+        <!--<div class="alert alert-danger alert-dismissible fade show" role="alert" v-if="isError">
+            <strong> {{ errorMsg }} </strong> Task should be at least 4 characters long.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+            @click="isError = !isError"></button>
+        </div>-->
+
+
+
       <!--Task Table-->
       <table class="table table-bordered mt-5">
         <thead>
           <tr>
             <th scope="col">Task</th>
-            <th scope="col">Status</th>
+            <th scope="col">Completed?</th>
             <th scope="col" class="text-center">Edit</th>
             <th scope="col" class="text-center">Delete</th>
           </tr>
         </thead>
         <tbody class="table-group-divider">
+          <!--<tr v-for="(task, index) in taskList" :index="index" :task="task">-->
           <tr v-for="(task, index) in tasks" :key="index">
-            <td style="width: 500px">
-              <span :class="{ finished: task.status === 'finished' }">
-                {{ task.name }}
+            <td style="width: 60%">
+              <span>
+                {{ task.title }}
               </span>
             </td>
-            <td style="width: 120px">
-              <span
-                @click="changeStatus(index)"
-                class="pointer"
-                :class="{
-                  'text-danger': task.status === 'to-do',
-                  'text-warning': task.status === 'in-progress',
-                  'text-success': task.status === 'finished',
-                }"
-              >
-                {{ task.status }}
-              </span>
+            <td style="width: 10%">
+                <div class="form-check" @click="completed(task.id, task.is_complete)">
+                    <input v-if="task.is_complete" type="checkbox" class="form-check-input" checked />
+                    <!--<label class="form-check-label" for="save-info"></label>-->
+                    <input v-else type="checkbox" class="form-check-input" />
+                </div>
             </td>
+
             <td>
               <div class="text-center" @click="editTask(index)">
                 <button type="submit" class="btn btn-success ms-1">Edit</button>
@@ -138,7 +164,8 @@ onMounted(async () => {
               </div>
             </td>
             <td>
-              <div class="text-center" @click="deleteTask(index)">
+              <div class="text-center" @click="remove(task.id)">
+              <!--<div class="text-center" @click="deleteTask(index)">-->
                 <button type="submit" class="btn btn-danger">Delete</button>
                 <span class="bi bi-trash-fill"></span>
               </div>

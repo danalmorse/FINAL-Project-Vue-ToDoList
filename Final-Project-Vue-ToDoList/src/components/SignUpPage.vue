@@ -5,47 +5,9 @@ import { useRouter } from "vue-router";
 import { useUserStore} from "./../stores/user.js";
 /*import { supabase } from '../supabase';*/
 
-/*Validation of the sign up form -------------------------------------------------------------
-data() {
-      return {
-        name: "",
-        email: "",
-        errorinfo: {
-            name: "",
-            email: "",
-      },
-      };
-    }, 
-
-    methods: {
-      GoandSubmit(event) {
-        event.preventDefault()
-        this.errorinfo.name="";
-        this.errorinfo.email="";
-
-        let noproceed = false;
-        /*
-         /*---Full Name check in box--------------------------------*/
-        /*if (this.name.length <= 0) {
-          this.errorinfo.name = "Error: invalid name not correct"
-          noproceed = true;
-        }*/
-
-         /*---email check in box with regex email check JS-----------*/
-        /*if (this.email.length === 0 || /^\s+$/.test(this.email)) {
-          this.errorinfo.email = "Error: invalid email address"
-          noproceed = true;
-        }*/
-
-        /*---check in proceeds or not and clean form-----------------*/
-        /*if (noproceed === true){
-          return false;
-        }*/
 
 export default {
-  /*name: "SignUp",*/
   
-
   setup () {
     // create data / vars
     const namecomplete = ref ("");
@@ -66,10 +28,7 @@ export default {
     /* verificar tema de errores formulario de aqui*/
     /*const errorinfo = "";*/
     let noproceed = false;
-    /* hasta aqui */
-    
-    // Sigup Function
-    /*const register = async () => {*/
+  
     const onSubmit = async () => {
       
       /* revisar tambien tema formulario de aqui*/
