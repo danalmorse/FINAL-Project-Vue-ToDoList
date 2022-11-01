@@ -16,7 +16,7 @@
 
         <div class="container">
           <div class="carousel-caption">
-            <img src="	https://assets.website-files.com/5fcb349058268443b1f5dbdb/62fa4ec866d3561702d19209_y-combinator.svg" class="w-25" alt="...">
+            <img src="https://assets.website-files.com/5fcb349058268443b1f5dbdb/62fa4ec866d3561702d19209_y-combinator.svg" class="w-25" alt="...">
             <!--<h1>Y Combinator Company</h1>
             <p>Some representative placeholder content for the first slide of the carousel.</p>
             <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>>-->
