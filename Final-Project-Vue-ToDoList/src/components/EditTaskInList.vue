@@ -60,7 +60,7 @@ const modifyTask = async (id, newTitle) => {
 <template>
     <main class=" d-flex flex-column justify-content-center bg-light">
         <div class="container pt-5 pb-5" >
-            <div class="text-muted mt-2 text-center">Task to edit</div>
+            <div class="text-muted mt-2 text-center">Task to be edited</div>
             <div class="text fs-6 card bg">
                 <div class="card-body">
                     {{ title }}
@@ -73,8 +73,8 @@ const modifyTask = async (id, newTitle) => {
                         v-model="newTitle" />
                 </div>
                 <div class="d-flex justify-content-between align-items-baseline">
-                    <router-link to="/To-Do-List" tag="button">&lt; Go to your list </router-link>
-                    <button id="myEditBtn" class="mt-3 btn btn-warning" type="submit" style="width: 60%"> Edit task </button>
+                    <router-link to="/To-Do-List" class="btn btn-secondary" style="width: 47%">&lt; Go to your list </router-link>
+                    <button id="myEditBtn" class="mt-3 btn btn-warning" type="submit" style="width: 48%"> + Edit task </button>
                 </div>
             </form>
 
