@@ -1,6 +1,6 @@
 <!-- This is the right ToDoList component / eslint-disable prettier/prettier -->
 <script setup>
-import { reactive, ref, onMounted, computed } from "vue";
+import { ref, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "../stores/user.js";
 import { useTaskStore } from "../stores/task.js";
