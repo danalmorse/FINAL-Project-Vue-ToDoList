@@ -1,13 +1,11 @@
+<!-- This is Sign Up component------------------------------------------------- -->
 <script>
 import { ref } from "vue";
 import { storeToRefs} from "pinia";
 import { useRouter } from "vue-router";
 import { useUserStore} from "./../stores/user.js";
 
-
-
-export default {
-  
+export default {  
   setup () {
     // create data / vars
     const namecomplete = ref ("");
@@ -24,84 +22,38 @@ export default {
     const router = useRouter();
     const userStore = useUserStore();
     const { user } = storeToRefs (userStore)
-
-    /* verificar tema de errores formulario de aqui*/
-    /*const errorinfo = "";*/
-    let noproceed = false;
   
+      //sign up process
     const onSubmit = async () => {
-      
-      /* revisar tambien tema formulario de aqui*/
-       /*---Full Name check in box--------------------------------*/
-        if (namecomplete.value.length <= 0) {
-          errorMsg2.value = "Error: invalid name not correct"
-          noproceed = true;
-        }
-
-         /*---email check in box with regex email check JS-----------*/
-        if (email.value.length === 0 || /^\s+$/.test(email.value)) {
-          errorMsg3.value = "Error: invalid email address"
-          noproceed = true;
-        }
-
-        
-      /* hasta aqui------------------------------------------------------------------*/
       if (password.value === confirmPassword.value) {
         try {
-          await userStore.signUp ( email.value, password.value)  
-          /* como pongo "please check your email confirmation"*/
+          await userStore.signUp (email.value, password.value)
+          alert("Please check your email, confirm signup and come back to sign in!")
           router.push({ path: "/Sign-In" });
-        
-        /*} catch (e) {
-          console.log(e)
-        },*/
-      } catch (error) { /*Preguntar si esto esta bien ya que no declaro error en const arriba */
+
+      } catch (error) { 
           errorMsg.value = error.message;
           setTimeout(() => {
           errorMsg.value = null;
           }, 5000);
       } 
-        return; /* Esto no creo que este bien */
-      }
-      errorMsg.value = "Error: Passwords do not match";
-      setTimeout(() => {
-        errorMsg.value = null;
-      }, 5000);
-
-      /*---check in proceeds or not and clean form-----------------*/
-      if (noproceed === true){
-          return false;
-        }
-    };
-          
-          /*const { error } = await supabase.auth.signUp({*/
-          /*  email: email.value,
-            password: password.value,
-          });
-          if (error) throw error;
-          router.push({ name: "SignIn" });
-        } catch (error) {
-          errorMsg.value = error.message;
-          setTimeout(() => {
-          errorMsg.value = null;
-          }, 5000);
-        }
         return;
       }
       errorMsg.value = "Error: Passwords do not match";
       setTimeout(() => {
         errorMsg.value = null;
       }, 5000);
-    };*/
+    };
 
-    return { namecomplete, email, password, confirmPassword, errorMsg, checked, onSubmit, errorMsg2, errorMsg3 }; /*verificar si errorMsg 2 y 3 dan bien */
+    return { namecomplete, email, password, confirmPassword, errorMsg, checked, onSubmit, errorMsg2, errorMsg3 };
   },
 
 };
 </script>
 
 <template>
-<section class="vh-100 bg-light">
+<section class="bg-light pt-5 pb-5">
+<!--<section class="vh-100 bg-light">-->
   <div class="container-sm h-100">
     
     <!--Register section-->
@@ -121,86 +73,75 @@ export default {
                   </div>
                   <h5 class="fw-normal mb-3 pb-3 text-center" style="letter-spacing: 1px;">SignUp and register an account</h5>
                 
-                <!--Aqui en form hice cambios @submit.prevent="register" prteguntar si esta bien????????????????????????????????????????????-->
-                <form @submit.prevent="onSubmit" class="mx-1 mx-md-4">
-                  <!--<form @submit.prevent="onSubmit" class="mx-1 mx-md-4">-->
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input type="text" required id="form3Example1c" class="form-control" placeholder="Your name" v-model="namecomplete"/>
-                      <!--<label class="form-label" for="form3Example1c">Your Name</label>-->
-                      <span> {{ errorMsg2 }} </span>
+                  <form @submit.prevent="onSubmit" class="mx-1 mx-md-4">
+                    <!--<form @submit.prevent="onSubmit" class="mx-1 mx-md-4">-->
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <input type="text" required id="form3Example1c" class="form-control" placeholder="Your name" v-model="namecomplete"/>
+                        <span> {{ errorMsg2 }} </span>
+                      </div>
                     </div>
-                  <!--Aqui es donde estoy poniendo error formulario preguntar???
-                  <span> {{ errorinfo.namecomplete }} </span>-->
-                  </div>
 
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input type="email" required id="form3Example3c" class="form-control" placeholder="Your email" v-model="email"/>
-                      <!--<label class="form-label" for="form3Example3c">Your Email</label>-->
-                      <span> {{ errorMsg3 }} </span>
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <input type="email" required id="form3Example3c" class="form-control" placeholder="Your email" v-model="email"/>
+                        <span> {{ errorMsg3 }} </span>
+                      </div>
                     </div>
-                  <!--Aqui es donde estoy poniendo error formulario preguntar???
-                  <span> {{ errorinfo.email }} </span>-->
-                  </div>
 
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input type="password" required id="form3Example4c" class="form-control" placeholder="password" v-model="password"/>
-                      <!--<label class="form-label" for="form3Example4c">Password</label>-->
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <input type="password" required id="form3Example4c" class="form-control" placeholder="password" v-model="password"/>
+                      </div>
                     </div>
-                  </div>
 
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input type="password" required id="form3Example4cd" class="form-control" placeholder="Repeat your password" v-model="confirmPassword"/>
-                      <!--<label class="form-label" for="form3Example4cd">Repeat your password</label>-->
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <input type="password" required id="form3Example4cd" class="form-control" placeholder="Repeat your password" v-model="confirmPassword"/>
+                      </div>
                     </div>
-                  </div>
 
-                  <div class="form-check d-flex justify-content-center mb-2">
-                    <input class="form-check-input me-2" required type="checkbox" value="" id="form2Example3c" v-model="checked"/>
-                    <label class="form-check-label" for="form2Example3">
-                      I agree all statements in <a href="#!" class="text-muted">Terms of use</a>
-                    </label>
-                  </div>
+                    <div class="form-check d-flex justify-content-center mb-2">
+                      <input class="form-check-input me-2" required type="checkbox" value="" id="form2Example3c" v-model="checked"/>
+                      <label class="form-check-label" for="form2Example3">
+                        I agree all statements in <a href="#!" class="text-muted">Terms of use</a>
+                      </label>
+                    </div>
 
-                  <div class="form-check d-flex justify-content-center mb-0">
-                    <p class="mb-3 pb-lg-2" style="color: #393f81;">Already have an account? <RouterLink :to="{ name: 'SignIn' }"><a href="#!"
-                      style="color: #393f81;">Sign In</a></RouterLink></p>
-                  </div>
+                    <div class="form-check d-flex justify-content-center mb-0">
+                      <p class="mb-3 pb-lg-2" style="color: #393f81;">Already have an account? <RouterLink :to="{ name: 'SignIn' }"><a href="#!"
+                        style="color: #393f81;">Sign In</a></RouterLink></p>
+                    </div>
 
-                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <button type="submit" class="btn btn-secondary btn-lg duration-200">Register</button>
-                  </div>
-                  <!--Error Handling, preguntar si esta bien???????????????????????????????????-->
-                  <div v-if="errorMsg" class="alert alert-danger text-center">
-                    <p class="text-align-center">{{ errorMsg }}</p>
-                  </div>
+                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                      <button type="submit" class="btn btn-secondary btn-lg duration-200">Register</button>
+                    </div>
+                    <!--Error Handling-->
+                    <div v-if="errorMsg" class="alert alert-danger text-center">
+                      <p class="text-align-center">{{ errorMsg }}</p>
+                    </div>
 
-                </form>
-
-              </div>
-              <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
-                  class="img-fluid" alt="Sample image">
-
+                  </form>
+                </div>
+                <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+                  <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
+                    class="img-fluid" alt="Sample image">
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
   </div>
 </section>
 </template>
 
 <style scoped>
-
+a {
+  text-decoration: none;
+}
 </style>

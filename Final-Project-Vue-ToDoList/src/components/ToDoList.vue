@@ -1,4 +1,4 @@
-<!-- This is the right ToDoList component / eslint-disable prettier/prettier -->
+<!-- This is the right ToDoList component ----------------------------------------------->
 <script setup>
 import { ref, onMounted } from "vue";
 import { storeToRefs } from "pinia";
@@ -17,8 +17,6 @@ const taskStore = useTaskStore();
 const { tasks } = storeToRefs(taskStore);
 
 /*let taskList = reactive(tasks)*/
-
-
 
 onMounted(async () => {
   try {
@@ -59,7 +57,6 @@ const createNew = async () => {
     user_id: user.value.id,
     title: title,
     is_complete: false,
-    /*inserted_at: new Date(),*/
     };
     try {
         await taskStore.createTask(newTask);
@@ -106,8 +103,6 @@ const remove = async (taskId) => {
     }
 };
 
-
-
 </script>
 
 <template>
@@ -124,6 +119,7 @@ const remove = async (taskId) => {
             type="text"
             placeholder="--> enter task <--"
             class="form-control"
+            required
           />
           <button id="myCreateBtn" type="submit" class="btn btn-warning rounded-0">
             Create

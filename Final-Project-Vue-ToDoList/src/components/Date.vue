@@ -1,3 +1,5 @@
+<!-- This is the header´s date component------------------------------------------------- -->
+
 <template>
   <div id="app">
     <h3>You are seeing the current date below</h3>

@@ -1,12 +1,12 @@
+<!-- This is the Header component------------------------------------------------- -->
+
 <script>
-/* Verificar tema LogOut desde aquí: ----------------------*/
-/*import { defineComponent, ref } from "vue";*/
 import { useRouter } from "vue-router";
 import { storeToRefs} from "pinia";
 import { useUserStore } from "./../stores/user.js";
-import { moment } from 'moment';
+/*import { moment } from 'moment';*/
 
-export default { /* continuo por aqui verificar si hay que utilizar el setup y declarar todas estas para el log out */
+export default {
     setup () {
         const router = useRouter();
         const userStore = useUserStore();
@@ -14,19 +14,18 @@ export default { /* continuo por aqui verificar si hay que utilizar el setup y d
 
     
         const onSubmit = async () => {
-      try {
-        await userStore.signOut ( user )
-        console.log ("logged out"); /*Preguntar como puedo poner una notificacion Log Out */
-        router.push({ path: "/"});
-      }
-      catch (error) {
-        console.log(error)
-      }
-    } 
+            try {
+                await userStore.signOut ( user )
+                alert("You have been logged out!");
+                console.log ("logged out");
+                router.push({ path: "/"});
+            }
+            catch (error) {
+                console.log(error)
+            }
+        } 
     return { onSubmit }
     },
-    /* Hasta aquí es donde he hecho tema log out---------------- */
-    
     methods: {
         currentDate() {
         const current = new Date();
@@ -40,7 +39,7 @@ export default { /* continuo por aqui verificar si hay que utilizar el setup y d
 </script>
 
 <template>
-    <nav class="navbar navbar-expand-lg bg-light">
+    <nav class="navbar navbar-expand-lg bg-light border-bottom">
         <div class="container-fluid pt-5">
             <RouterLink :to="{ name: 'home' }">
                 <div class="text-muted">

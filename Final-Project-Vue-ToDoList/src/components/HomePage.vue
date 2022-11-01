@@ -1,5 +1,7 @@
+<!-- This is the Home page component------------------------------------------------- -->
+
 <script setup>
-import { RouterLink } from 'vue-router'
+import { RouterLink } from 'vue-router';
 
 </script>
 

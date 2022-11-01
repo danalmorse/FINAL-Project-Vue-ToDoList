@@ -1,27 +1,21 @@
-<!-- This is the Edit Task in List component -->
-
+<!-- This is the Edit Task in List component --------------------------------------------->
 <script setup>
+import { ref, reactive, onMounted, computed } from 'vue';
+import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
+import { useTaskStore } from '../stores/task.js';
 
-import { ref, reactive, onMounted, computed } from 'vue'
-import { useRoute } from 'vue-router'
-import { useRouter } from 'vue-router'
-import { storeToRefs } from 'pinia'
-import { useTaskStore } from '../stores/task.js'
-
-//For router link
-const router = useRouter()
-
-// Data from task
-const route = useRoute()
-const id = ref(route.params.id)
-const title = ref(route.query.title)
-const newTitle = ref('')
-
-//Displaying errors in banner
-const taskStore = useTaskStore()
-const { errors } = storeToRefs(taskStore)
-let errorMsg = reactive(errors)
-let isError = ref(false)
+//variables declaration
+const router = useRouter();
+const route = useRoute();
+const id = ref(route.params.id);
+const title = ref(route.query.title);
+const newTitle = ref('');
+const taskStore = useTaskStore();
+const { errors } = storeToRefs(taskStore);
+let errorMsg = reactive(errors);
+let isError = ref(false);
 
 onMounted(async () => {
     errorMsg.value = null
@@ -31,9 +25,9 @@ const showError = computed({
     set: (value) => {
         isError.value = value
     }
-})
+});
 
-const modifyTask = async (id, newTitle) => {
+const editTaskList = async (id, newTitle) => {
     try {
         if (newTitle) {
             await taskStore.editTask(id, newTitle)
@@ -54,7 +48,7 @@ const modifyTask = async (id, newTitle) => {
     } catch (e) {
         console.log(e)
     }
-}
+};
 </script>
 
 <template>
@@ -66,14 +60,14 @@ const modifyTask = async (id, newTitle) => {
                     {{ title }}
                 </div>
             </div>
-            <form class="mt-4" @submit.prevent="modifyTask(id, newTitle)">
+            <form class="mt-4" @submit.prevent="editTaskList(id, newTitle)">
                 <div class="text-center">
                     <label class="text-muted" for="task">New edited Task</label>
                     <input id="title" type="text" class="form-control text-muted" placeholder="--> enter edited task <--"
                         v-model="newTitle" />
                 </div>
                 <div class="d-flex justify-content-between align-items-baseline">
-                    <router-link to="/To-Do-List" class="btn btn-secondary" style="width: 47%">&lt; Go to your list </router-link>
+                    <router-link to="/To-Do-List" class="btn btn-secondary" style="width: 47%">Go to tasks list </router-link>
                     <button id="myEditBtn" class="mt-3 btn btn-warning" type="submit" style="width: 48%"> + Edit task </button>
                 </div>
             </form>

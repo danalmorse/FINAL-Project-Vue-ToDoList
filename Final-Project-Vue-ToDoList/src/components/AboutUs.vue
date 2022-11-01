@@ -1,3 +1,4 @@
+<!-- This is the About Us component------------------------------------------------- -->
 <script setup>
 
 </script>
@@ -5,7 +6,6 @@
 <template>
   <div class="container marketing">
     <h1 class="text-center">About us</h1>
-    <!-- START THE FEATURETTES -->
     <hr class="featurette-divider">
       <div class="row featurette">
         <div class="col-md-7">
@@ -47,11 +47,7 @@
             <rect width="100%" height="100%" fill="#eee"></rect>
       </div>
     </div>
-
       <hr class="featurette-divider">
-
-    <!-- /END THE FEATURETTES -->
-
   </div>
 </template>
 
