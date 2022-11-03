@@ -7,22 +7,17 @@ import { useUserStore} from "./../stores/user.js";
 
 export default {  
   setup () {
-    // create data / vars
+    //variables declaration
+    const router = useRouter();
+    const userStore = useUserStore();
+    const { user } = storeToRefs (userStore);
     const namecomplete = ref ("");
     const email = ref("");
     const password = ref(null);
     const confirmPassword = ref(null);
     const errorMsg = ref(null);
     const checked = ref(null);
-    
-    /*Estos a ver si puedo hacer el error en formulario */
-    const errorMsg2 = ref(null);
-    const errorMsg3 = ref(null);
 
-    const router = useRouter();
-    const userStore = useUserStore();
-    const { user } = storeToRefs (userStore)
-  
       //sign up process
     const onSubmit = async () => {
       if (password.value === confirmPassword.value) {
@@ -45,7 +40,7 @@ export default {
       }, 5000);
     };
 
-    return { namecomplete, email, password, confirmPassword, errorMsg, checked, onSubmit, errorMsg2, errorMsg3 };
+    return { namecomplete, email, password, confirmPassword, errorMsg, checked, onSubmit };
   },
 
 };
@@ -79,7 +74,6 @@ export default {
                       <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
                         <input type="text" required id="form3Example1c" class="form-control" placeholder="Your name" v-model="namecomplete"/>
-                        <span> {{ errorMsg2 }} </span>
                       </div>
                     </div>
 
@@ -87,7 +81,6 @@ export default {
                       <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
                         <input type="email" required id="form3Example3c" class="form-control" placeholder="Your email" v-model="email"/>
-                        <span> {{ errorMsg3 }} </span>
                       </div>
                     </div>
 

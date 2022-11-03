@@ -48,21 +48,21 @@ export const useTaskStore = defineStore('tasks', {
         this.errors = null;
         if (error) throw error
       } catch (error) {
-        this.errors = "Error!!!: Error something went wrong, please try again. "
+        this.errors = "Error!!!: something went wrong, please try again. "
       }
     },
 
-    async toogleCompleted(id, isComplete) {
+    async checkpointCompleted(id, completedCheck) {
       try {
         const { data, error } = await supabase
           .from('tasks')
-          .update({ is_complete: isComplete })
+          .update({ is_complete: completedCheck })
           .eq('id', id)
           /*.match({ id })*/
         this.errors = null;
         if (error) throw error
       } catch (error) {
-        this.errors = "Error!!!: Error completing task, please try again. "
+        this.errors = "Error!!!: completing task, please try again. "
       }
     },
     

@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <!-- This is the header´s date component------------------------------------------------- -->
 
 <template>

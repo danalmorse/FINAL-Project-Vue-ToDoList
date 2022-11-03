@@ -4,10 +4,11 @@ import { ref, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "../stores/user.js";
 import { useTaskStore } from "../stores/task.js";
-import { useRouter } from "vue-router";
 import moment from 'moment';
-
+/*import { useRouter } from "vue-router";*/
 /*const router = useRouter();*/
+
+  //variables declaration-------------------
 // User Store variables
 const userStore = useUserStore();
 const { user } = storeToRefs(userStore);
@@ -15,8 +16,9 @@ const { user } = storeToRefs(userStore);
 // task Store variables
 const taskStore = useTaskStore();
 const { tasks } = storeToRefs(taskStore);
-
 /*let taskList = reactive(tasks)*/
+
+  //Get Tasks from Store
 
 onMounted(async () => {
   try {
@@ -26,27 +28,6 @@ onMounted(async () => {
   }
 });
 
-//Displaying errors in banner
-
-/*const { errors } = storeToRefs(taskStore);
-let errorMsg = reactive(errors);
-let isError = ref(false);
-onMounted(async () => {
-  errorMsg.value = null
-});
-const showError = computed({
-  set: (value) => {
-    isError.value = value;
-  },
-});*/
-
-//Showing waiting animation
-/*let loading = ref(false);
-const triggerModal = computed({
-  set: (value) => {
-    loading.value = value;
-  },
-});*/
 
 // Creating new Task
 
@@ -62,30 +43,18 @@ const createNew = async () => {
         await taskStore.createTask(newTask);
         await taskStore.fetchTasks();
         title.value = '';
-        /*if (errorMsg.value != null) {
-        showError.value = true;
-        }*/
+        
     } catch (e) {
     console.log(e);
     }
 };
 
-// Edit Task
-/*const { errors } = storeToRefs(taskStore);
-let errorMsg = reactive(errors);*/
-/*let isError = ref(false)*/
-/*onMounted(async () => {
-    errorMsg.value = null
-});*/
-
-
-
 // Showing if task is complete
 
-const completed = async (taskId, isComplete) => {
+const toBeCompleted = async (taskId, completedCheck) => {
     try {
-        isComplete = !isComplete
-        await taskStore.toogleCompleted(taskId, isComplete)
+        completedCheck = !completedCheck
+        await taskStore.checkpointCompleted(taskId, completedCheck)
         await taskStore.fetchTasks()
         
     } catch (e) {
@@ -124,23 +93,10 @@ const remove = async (taskId) => {
           <button id="myCreateBtn" type="submit" class="btn btn-warning rounded-0">
             Create
           </button>
-          <!--<button @click="submitTask" class="btn btn-warning rounded-0">
-          SUBMIT
-        </button>-->
         </div>
       </form>
 
-      <!--OTra cosa agregada de A-->
-      <!-- Error banner-->
-        <!--<div class="alert alert-danger alert-dismissible fade show" role="alert" v-if="isError">
-            <strong> {{ errorMsg }} </strong> Task should be at least 4 characters long.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
-            @click="isError = !isError"></button>
-        </div>-->
-
-
-
-      <!--Task Table-->
+      <!--Tasks list Table-->
       <table class="table table-bordered mt-5">
         <thead>
           <tr>
@@ -159,7 +115,7 @@ const remove = async (taskId) => {
               </span>
             </td>
             <td style="width: 10%">
-                <div class="form-check" @click="completed(task.id, task.is_complete)">
+                <div class="form-check" @click="toBeCompleted(task.id, task.is_complete)">
                     <input v-if="task.is_complete" type="checkbox" class="form-check-input" checked />
                     <!--<label class="form-check-label" for="save-info"></label>-->
                     <input v-else type="checkbox" class="form-check-input" />
@@ -187,7 +143,6 @@ const remove = async (taskId) => {
           </tr>
         </tbody>
       </table>
-
     </div>
   </div>
 </template>

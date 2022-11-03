@@ -1,4 +1,4 @@
-<!-- This is the About Us component------------------------------------------------- -->
+<!-- This is the About Us component--------------------------------------------------->
 <script setup>
 
 </script>

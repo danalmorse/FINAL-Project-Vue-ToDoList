@@ -9,7 +9,7 @@ import { useUserStore } from "./../stores/user.js"
 export default defineComponent ({
   
   setup () {
-    //Create data/ vars
+    //variables declaration
     const email = ref(null);
     const password = ref(null);
     const router = useRouter();
@@ -21,7 +21,6 @@ export default defineComponent ({
     // SignIn process
     const onSubmit = async () => {
       try {
-        /*const { error } = await userStore.signIn ( email.value, password.value)*/
         await userStore.signIn ( email.value, password.value )
         router.push({ path: "/To-Do-List"});
       }
@@ -39,10 +38,6 @@ export default defineComponent ({
 <section class="bg-light">
   <!--<section class="vh-100 bg-light">-->
   <div class="container-sm py-5 h-100">
-    <!--Error Handling
-    <div v-if="errorMsg" class="mb-10 p-4 rounder-md bg-light-grey shadow-lg">
-      <p class="text-red-500">{{ errorMsg }}</p>
-    </div>-->
 
     <!--Register section-->
     <div class="row d-flex justify-content-center align-items-center h-100">

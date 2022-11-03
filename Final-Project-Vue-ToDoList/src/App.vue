@@ -1,15 +1,11 @@
+<!--This is the APP.vue main component----------------------------------------->
+
 <template>
   <div>
     <HeaderPage />
+    
     <RouterView/>
-    <!--<ToDoList/>-->
-    <!--<ToDoList2/>-->
-    <!--<HomePage/>
-    <SignInPage/>
-    <SignUpPage/>
-    <AboutUs/>
-    <Collaborators/>-->
-    <!--<ToDoList/>-->
+
     <FooterPage />
 
   </div>
@@ -17,7 +13,6 @@
 
 <script setup>
 
-/*import { defineComponent } from 'vue';*/
 import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useUserStore } from './stores/user';
@@ -25,21 +20,8 @@ import { RouterView, useRouter } from 'vue-router';
 
 import HeaderPage from './components/HeaderPage.vue';
 import FooterPage from './components/FooterPage.vue';
-/*import ToDoList from './components/ToDoList.vue'*/
-/*import ToDoList2 from './components/ToDoList2.vue'*/
-/*import HomePage from './components/HomePage.vue'*/
-/*import AboutUs from './components/AboutUs.vue'*/
-/*import Collaborators from './components/Collaborators.vue'*/
-/*import SignInPage from './components/SignInPage.vue'*/
-/*import SignUpPage from './components/SignUpPage.vue'*/
-/*import Date from './components/Date.vue'*/
-/*import ToDoList from './components/ToDoList.vue';*/
-
-/*export default defineComponent ({*/
-
-  /*setup (props, {emit}){*/
-  /*setup () {*/
-
+    
+    //variables declaration
     const router = useRouter();
     const userStore = useUserStore();
     const { user } = storeToRefs(userStore);
@@ -51,7 +33,6 @@ import FooterPage from './components/FooterPage.vue';
         console.log(user.value)
         if (!user.value) {
           console.log('No estas logeado')
-          /*await userStore.signUp("danalmorse@gmail.com", "password")*/
           console.log(user.value)
 
           // redirect them to logout if the user is not there
@@ -67,9 +48,7 @@ import FooterPage from './components/FooterPage.vue';
         console.log(e)
       }
     })
-  /*},
-
-});*/
+  
 
 </script>
 

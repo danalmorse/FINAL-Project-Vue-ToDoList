@@ -8,6 +8,7 @@ import { useUserStore } from "./../stores/user.js";
 
 export default {
     setup () {
+        //variables declaration
         const router = useRouter();
         const userStore = useUserStore();
         const { user } = storeToRefs(userStore);

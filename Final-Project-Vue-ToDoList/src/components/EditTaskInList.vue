@@ -6,44 +6,45 @@ import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useTaskStore } from '../stores/task.js';
 
-//variables declaration
+    //variables declaration
+const taskStore = useTaskStore();
+const { errors } = storeToRefs(taskStore);
 const router = useRouter();
 const route = useRoute();
 const id = ref(route.params.id);
 const title = ref(route.query.title);
 const newTitle = ref('');
-const taskStore = useTaskStore();
-const { errors } = storeToRefs(taskStore);
-let errorMsg = reactive(errors);
-let isError = ref(false);
+
+let errorVar = ref(false);
+let errorDply = reactive(errors);
+
 
 onMounted(async () => {
-    errorMsg.value = null
+    errorDply.value = null
 });
 
-const showError = computed({
+const errorDisplay = computed({
     set: (value) => {
-        isError.value = value
+        errorVar.value = value
     }
 });
 
+    //edit task in list with error and redirect to Task List after edited
 const editTaskList = async (id, newTitle) => {
     try {
         if (newTitle) {
             await taskStore.editTask(id, newTitle)
             newTitle = ''
-            if (errorMsg.value != null) {
-                //Display error
-                showError.value = true
+            if (errorDply.value != null) {
+                errorDisplay.value = true
             }
             else {
-                //Redirect to dashboard after successful edit
                 router.push({ path: '/To-Do-List' })
             }
         }
         else {
-            errorMsg.value = "Error!!!: Error something went wrong, please try again. "
-            showError.value = true
+            errorDply.value = "Error!!!: please try again. "
+            errorDisplay.value = true
         }
     } catch (e) {
         console.log(e)
@@ -72,11 +73,11 @@ const editTaskList = async (id, newTitle) => {
                 </div>
             </form>
 
-            <!-- Error banner-->
-            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert" v-if="isError">
-                <strong> {{ errorMsg }} </strong> Task should be at least 4 characters long.
+            <!-- Error Message-->
+            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert" v-if="errorVar">
+                <strong> {{ errorDply }} </strong> Enter task information.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
-                    @click="isError = !isError"></button>
+                    @click="errorVar = !errorVar"></button>
             </div>
         </div>
     </main>

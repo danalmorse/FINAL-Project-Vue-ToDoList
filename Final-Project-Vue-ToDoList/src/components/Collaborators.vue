@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <!-- This is the Collaborators component------------------------------------------------- -->
 <script setup>
 
